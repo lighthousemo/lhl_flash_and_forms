@@ -1,0 +1,16 @@
+<h1>Library</h1>
+/app/assets/images/rhino.jpg
+<%# image_tag '/assets/rhino.jpg' %>
+
+<p> TODO: Add a serach form that allows us to search for a book by title or author</p>
+<div>
+  <ul>
+  <% @books.each do |book| %>
+    <li>
+      <strong><%= book.title %></strong>
+      <br>
+      <small>by <%= book.author %></small>
+    </li>
+  <% end %>
+  </ul>
+</div>

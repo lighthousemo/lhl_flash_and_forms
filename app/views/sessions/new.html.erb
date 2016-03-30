@@ -1,0 +1,6 @@
+<h1>Login</h1>
+<p>Fake login form used to test messages</p>
+<%= form_tag session_path, method: :post do %>
+  <%= check_box_tag :should_login_successfully %> Checkbox
+  <%= submit_tag "Login" %>
+<% end %>
