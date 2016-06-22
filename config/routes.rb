@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get '/login' => 'sessions#new', as: :login  # login_url 
   resource :session, only: [:new, :create]
-  resources :books, only: [:index, :new, :create, :update]
+  resources :books, only: [:index, :new, :create, :edit, :update]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

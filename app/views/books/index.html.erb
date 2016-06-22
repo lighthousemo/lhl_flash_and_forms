@@ -3,6 +3,12 @@
 <%# image_tag '/assets/rhino.jpg' %>
 
 <p> TODO: Add a serach form that allows us to search for a book by title or author</p>
+<!--form method="GET" actions="<%= books_path %>">
+  <input type="text" name="query" placeholder="Search by title or author"/>
+</form-->
+<%= form_tag books_path, method: "GET" do %>
+  <%= text_field_tag :query, nil, placeholder: "Search by title or author" %>
+<% end %>
 <div>
   <ul>
   <% @books.each do |book| %>

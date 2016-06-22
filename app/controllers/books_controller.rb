@@ -5,21 +5,31 @@ class BooksController < ApplicationController
   end
 
   def create
-    # @book = Book.new(
-    #   title: params[:book][:title],
-    #   author: params[:book][:author]
+    # This works fine, but if you have a lot of fields in the form, it will be tedious to list them out individually
+    # book = Book.new(
+    #   title: params[:title],
+    #   author: params[:author]
     # )
-    # Mass assignment won't work.
-    # @book = Book.new(params[:book])
-    @book = Book.new(book_params)
-    if @book.save
-      redirect_to books_path, notice: "Create book #{@book.title}"
-    else
-      flash.now[:error] = "Could not create book"
-      # redirect_to new_book_path  # Server: 301 - ask browser to requrest /books/new
-      #                            # Browser: GET /books/new
 
-      render :new  # Server: "<html><head>...<body><form>"
+    # @book = Book.new(params.require(:book).permit(:title, :author))
+    # The line above is roughly the same as the line below
+    @book = Book.new(params[:book].permit(:title, :author))
+    if @book.save
+      # flash[:notice] = "Successfully created book <strong>#{params[:book][:title]}</strong>"
+      # keys: notice, error, warning, alert
+      redirect_to books_path
+      # When we do a redirect the following steps happen
+      # 1. server sends: 301 ->  "please make a GET request to /books"
+      # 2. browser: GET "/books"
+      # 3. server sends html for /books
+      
+      # short version of the redirect_to
+      redirect_to books_path, notice: "Successfully created book <strong>#{params[:book][:title]}</strong>"
+      redirect_to books_path, flash: {error: "Some error"}
+    else
+      flash.now[:error] = "There was an error in the form"
+      render :new
+      # 1. send back html for the form
     end
   end
 
@@ -31,10 +41,19 @@ class BooksController < ApplicationController
     end
   end
 
+  # /books/:id/edit
+  def edit
+    @book = Book.find(params[:id])
+    render :edit
+  end
+
+  # The line
+  #  book = Book.new(params[:book].permit(:title, :author))
+  # can be refactored to
+  #  book = Book.new(book_params)
   private
-  # Whitelist the params we want to receive from the new book form
   def book_params
-    params.require(:book).permit([:title, :author])
+    params[:book].permit(:title, :author)
   end
 
 end

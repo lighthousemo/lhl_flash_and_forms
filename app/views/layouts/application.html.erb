@@ -9,7 +9,14 @@
 </head>
 <body>
   <div class="container">
-  <p> TODO: Display important messages here (flash notice / flash error)</p>
+    <p>
+      <% if flash[:notice] %>
+        <div style="color: green"><%= flash[:notice].html_safe %></div>
+      <% end %>
+      <% if flash[:error] %>
+        <div style="color: red"><%= flash[:error] %></div>
+      <% end %>
+    </p>
 
   <%= yield %>
   </div>

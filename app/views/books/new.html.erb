@@ -1,3 +1,38 @@
 <h1>New Book</h1>
 
 <p>TODO: Create a form to add a new book </p>
+<div>form_for version of form</div>
+
+<%= form_for @book do |f| %>
+  <p>
+    <%= f.label :title, "Book Title" %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :author %>
+    <%= f.text_field :author, "class" => "monkey", "data-blah" => "foo" %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+
+<hr /><br />
+<div>Form below is a manual form</div>
+
+<form method="POST" action="/books">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"/>
+  <p>
+    <label>Title</label>
+    <input type="text" name="book[title]" value="<%= @book.title %>" />
+  </p>
+  <p>
+    <label>Author</label>
+    <input type="text" name="book[author]" value="<%= @book.author %>"/>
+  </p>
+  <p>
+    <input type="submit"/>
+  </p>
+</form>
+
